@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "username": "superadmin",
+    "email": "superadmin@example.com",
+    "password": "super@&123",
+    "role": "super_admin",
+    "congregation_id": null,
+    "congregation_name": null,
+    "verified": true
+  },
+  {
+    "id": 2,
+    "username": "garki-admin",
+    "email": "garki.admin@example.com",
+    "password": "garki@123",
+    "role": "congregation_admin",
+    "congregation_id": 1,
+    "congregation_name": "Church of Christ, Garki",
+    "verified": true
+  },
+  {
+    "id": 3,
+    "username": "ikoyi-admin",
+    "email": "ikoyi.admin@example.com",
+    "password": "ikoyi@123",
+    "role": "congregation_admin",
+    "congregation_id": 2,
+    "congregation_name": "Church of Christ, Ikoyi",
+    "verified": false
+  }
+]

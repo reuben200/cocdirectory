@@ -1,0 +1,144 @@
+[
+  {
+    "id": 1,
+    "name": "Church of Christ, Garki",
+    "country": "Nigeria",
+    "state": "FCT",
+    "lga": "Garki",
+    "city": "Abuja",
+    "address": "Plot 14, Area 3, Garki, Abuja",
+    "preacher_name": "Bro. John Okoro",
+    "contact_phone": "+2348012345678",
+    "contact_email": "garki.churchofchrist@example.com",
+    "worship_times": [
+      { "day": "Sunday", "activity": "Worship Service", "time": "9:00 AM - 12:00 PM" },
+      { "day": "Wednesday", "activity": "Bible Study", "time": "6:00 PM - 7:30 PM" }
+    ],
+    "social_links": [
+      { "platform": "Facebook", "url": "https://facebook.com/garki", "icon": "facebook" },
+      { "platform": "Twitter", "url": "https://twitter.com/garki", "icon": "twitter" }
+    ],
+    "images": [
+      "https://picsum.photos/id/1011/800/500",
+      "https://i.ibb.co/zWKFtVwD/thumb-1920-512463-1.jpg"
+    ],
+    "location": {
+      "latitude": 9.0667,
+      "longitude": 7.4833
+    },
+    "verified": true,
+    "created_at": "2025-09-10T08:00:00Z"
+  },
+
+  {
+    "id": 2,
+    "name": "Church of Christ, Nairobi Central",
+    "country": "Kenya",
+    "state": "Nairobi County",
+    "lga": null,
+    "city": "Nairobi",
+    "address": "Moi Avenue, Nairobi Central",
+    "preacher_name": "Bro. Peter Mwangi",
+    "contact_phone": "+254701234567",
+    "contact_email": "nairobi.central@example.com",
+    "worship_times": [
+      { "day": "Sunday", "activity": "Morning Worship", "time": "10:00 AM - 12:30 PM" },
+      { "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:30 PM - 7:00 PM" }
+    ],
+    "social_links": [
+      { "platform": "Facebook", "url": "https://facebook.com/nairobicoc", "icon": "facebook" }
+    ],
+    "images": [
+      "https://picsum.photos/id/1025/800/500"
+    ],
+    "location": {
+      "latitude": -1.286389,
+      "longitude": 36.817223
+    },
+    "verified": true,
+    "created_at": "2025-09-12T11:20:00Z"
+  },
+
+  {
+    "id": 3,
+    "name": "Church of Christ, Accra North",
+    "country": "Ghana",
+    "state": "Greater Accra",
+    "lga": null,
+    "city": "Accra",
+    "address": "Boundary Road, East Legon",
+    "preacher_name": "Bro. Kwesi Boateng",
+    "contact_phone": "+233501234567",
+    "contact_email": "accra.north@example.com",
+    "worship_times": [
+      { "day": "Sunday", "activity": "Worship & Communion", "time": "8:30 AM - 11:30 AM" },
+      { "day": "Tuesday", "activity": "Bible Class", "time": "6:00 PM - 7:30 PM" }
+    ],
+    "social_links": [],
+    "images": [
+      "https://picsum.photos/id/1035/800/500"
+    ],
+    "location": {
+      "latitude": 5.6037,
+      "longitude": -0.1870
+    },
+    "verified": false,
+    "created_at": "2025-09-15T14:05:00Z"
+  },
+
+  {
+    "id": 4,
+    "name": "Church of Christ, London Central",
+    "country": "United Kingdom",
+    "state": "England",
+    "lga": "Greater London",
+    "city": "London",
+    "address": "20 Kingsway, London WC2B 6LE",
+    "preacher_name": "Bro. Daniel Wright",
+    "contact_phone": "+447812345678",
+    "contact_email": "london.central@example.com",
+    "worship_times": [
+      { "day": "Sunday", "activity": "Morning Worship", "time": "10:30 AM - 12:45 PM" },
+      { "day": "Wednesday", "activity": "Fellowship & Study", "time": "7:00 PM - 8:30 PM" }
+    ],
+    "social_links": [
+      { "platform": "Facebook", "url": "https://facebook.com/londoncoc", "icon": "facebook" },
+      { "platform": "YouTube", "url": "https://youtube.com/londoncoc", "icon": "youtube" }
+    ],
+    "images": [
+      "https://picsum.photos/id/1041/800/500"
+    ],
+    "location": {
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    },
+    "verified": true,
+    "created_at": "2025-10-01T09:15:00Z"
+  },
+
+  {
+"id": 5,
+"name": "Church of Christ, Nairobi Central",
+"country": "Kenya",
+"state": "Nairobi County",
+"lga": "Nairobi Central",
+"city": "Nairobi",
+"address": "Haile Selassie Ave, Nairobi Central, Nairobi",
+"preacher_name": "Bro. Daniel Mwangi",
+"contact_phone": "+254701234567",
+"contact_email": "nairobi.central.coc@example.com",
+"worship_times": [
+{ "day": "Sunday", "activity": "Worship Service", "time": "10:00 AM - 12:30 PM" },
+{ "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:00 PM - 6:30 PM" }
+],
+"social_links": [
+{ "platform": "Facebook", "url": "https://facebook.com/nairobcoc", "icon": "facebook" }
+],
+"images": [
+"https://cdn.pixabay.com/photo/2016/11/19/14/00/church-1832423_960_720.jpg"
+],
+"location": { "latitude": -1.286389, "longitude": 36.817223 },
+"verified": true,
+"created_at": "2025-08-15T09:20:00Z"
+  }
+]

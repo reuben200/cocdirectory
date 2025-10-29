@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "congregation_id": 1,
+    "congregation_name": "Church of Christ, Garki",
+    "title": "Youth Evangelism",
+    "date": "2025-10-20",
+    "time": "09:00",
+    "image": "https://cdn.pixabay.com/photo/2015/10/11/21/29/bible-983105_960_720.jpg",
+    "description": "A day of outreach and evangelism led by the youth group. Members will share the gospel within nearby communities.",
+    "category": "Evangelism",
+    "location": "Garki, Abuja",
+    "created_at": "2025-09-30T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "congregation_id": 1,
+    "congregation_name": "Church of Christ, Garki",
+    "title": "Sisters Seminar",
+    "date": "2025-11-05",
+    "time": "15:00",
+    "image": "https://cdn.pixabay.com/photo/2016/11/29/09/32/prayer-1868563_960_720.jpg",
+    "description": "A spiritual development seminar for women to grow in faith and service.",
+    "category": "Fellowship",
+    "location": "Garki, Abuja",
+    "created_at": "2025-10-02T10:30:00Z"
+  },
+  {
+    "id": 3,
+    "congregation_id": 2,
+    "congregation_name": "Church of Christ, Accra Central",
+    "title": "Bible Study Workshop",
+    "date": "2025-10-18",
+    "time": "10:00",
+    "image": "https://cdn.pixabay.com/photo/2015/05/31/11/23/bible-791543_960_720.jpg",
+    "description": "Interactive Bible study and training session for members and new converts.",
+    "category": "Teaching",
+    "location": "Accra Central, Accra",
+    "created_at": "2025-09-28T11:45:00Z"
+  },
+  {
+    "id": 4,
+    "congregation_id": 2,
+    "congregation_name": "Church of Christ, Accra Central",
+    "title": "Youth Praise",
+    "date": "2025-11-12",
+    "time": "18:00",
+    "image": "https://cdn.pixabay.com/photo/2016/11/29/13/14/music-1869222_960_720.jpg",
+    "description": "An evening of singing, worship, and exhortation led by the youth choir.",
+    "category": "Worship",
+    "location": "Accra Central, Accra",
+    "created_at": "2025-10-03T12:15:00Z"
+  }
+,
+  {
+    "id": 5,
+    "congregation_id": 3,
+    "congregation_name": "Church of Christ, Nairobi Central",
+    "title": "General Evangelism",
+    "date": "2025-10-25",
+    "time": "08:30",
+    "image": "https://cdn.pixabay.com/photo/2017/03/16/20/10/first-aid-2150320_960_720.jpg",
+    "description": "Free medical screening and community wellness outreach organized by the brethren.",
+    "category": "Outreach",
+    "location": "Nairobi Central, Nairobi",
+    "created_at": "2025-09-29T09:10:00Z"
+  },
+  {
+    "id": 6,
+    "congregation_id": 3,
+    "congregation_name": "Church of Christ, Nairobi Central",
+    "title": "Marriage & Family Enrichment Seminar",
+    "date": "2025-11-08",
+    "time": "14:00",
+    "image": "https://cdn.pixabay.com/photo/2016/11/29/05/45/hands-1866616_960_720.jpg",
+    "description": "Biblical teaching focused on building strong Christian families and marriages.",
+    "category": "Seminar",
+    "location": "Nairobi Central, Nairobi",
+    "created_at": "2025-10-05T13:30:00Z"
+  },
+  {
+    "id": 7,
+    "congregation_id": 4,
+    "congregation_name": "Church of Christ, London",
+    "title": "European Gospel Campaign",
+    "date": "2025-10-27",
+    "time": "16:00",
+    "image": "https://cdn.pixabay.com/photo/2016/11/29/10/07/church-1868497_960_720.jpg",
+    "description": "A regional gospel mission bringing congregations from across Europe together to spread the word.",
+    "category": "Campaign",
+    "location": "London, United Kingdom",
+    "created_at": "2025-10-01T15:50:00Z"
+  },
+  {
+    "id": 8,
+    "congregation_id": 4,
+    "congregation_name": "Church of Christ, London",
+    "title": "Leadership Development Workshop",
+    "date": "2025-11-15",
+    "time": "10:00",
+    "image": "https://cdn.pixabay.com/photo/2015/09/05/20/02/office-924761_960_720.jpg",
+    "description": "Training workshop for church leaders, teachers, and ministry workers.",
+    "category": "Training",
+    "location": "London, United Kingdom",
+    "created_at": "2025-10-06T12:00:00Z"
+  }
+]

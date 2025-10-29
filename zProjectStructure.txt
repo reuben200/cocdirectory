@@ -1,0 +1,242 @@
+🕊️ Project Title:
+==================================
+Church of Christ Global Directory
+==================================
+
+🌍 Overview
+=============
+The Church of Christ Global Directory is a web platform designed to serve as an official, searchable directory for congregations of the Church of Christ across different locations (countries, states, LGAs, etc.).
+
+Each congregation can register, get verified, and gain access to a dashboard where they can manage their congregation’s information and post local events.
+
+The frontend (built in React + TailwindCSS) will consume data from the Django backend via REST API endpoints returning JSON responses.
+
+🎯 Key Objectives
+==================
+Allow congregations to register and manage their profiles once verified.
+Allow super admins to verify congregations and manage the directory.
+Provide visitors with a searchable, filterable directory of all congregations.
+Display local events from all congregations together in one unified event list.
+
+🧩 User Roles
+==============
+
+-----------
+Super Admin
+-----------
+Can approve or reject congregation registration requests.
+Can update or remove congregation records.
+Manages all data on the platform.
+
+-------------------
+Congregation Admin
+-------------------
+Registers congregation details.
+Waits for verification before getting dashboard access.
+Once verified, can edit congregation info and manage local events.
+
+-------------
+Visitor/User
+-------------
+Can view all congregations and events without login.
+Can search/filter by name, location, preacher, or keyword.
+
+⚙️ Authentication & Verification Flow
+======================================
+A congregation admin signs up with congregation details and contact info.
+A verification email is sent (email verification).
+The super admin reviews and approves the congregation manually.
+Once approved, the congregation admin gains dashboard access.
+
+🗂️ Expected Endpoints and JSON Structure
+=========================================
+
+1. Congregations
+-----------------
+Endpoint: /api/congregations/
+Methods: GET, POST, PUT, DELETE (restricted by role)
+
+Sample Response (GET /api/congregations/):
+[
+  {
+    "id": 2,
+    "name": "Church of Christ, Nairobi Central",
+    "country": "Kenya",
+    "state": "Nairobi County",
+    "lga": null,
+    "city": "Nairobi",
+    "address": "Moi Avenue, Nairobi Central",
+    "preacher_name": "Bro. Peter Mwangi",
+    "contact_phone": "+254701234567",
+    "contact_email": "nairobi.central@example.com",
+    "worship_times": [
+      { "day": "Sunday", "activity": "Morning Worship", "time": "10:00 AM - 12:30 PM" },
+      { "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:30 PM - 7:00 PM" }
+    ],
+    "social_links": [
+      { "platform": "Facebook", "url": "https://facebook.com/nairobicoc", "icon": "facebook" }
+    ],
+    "images": [
+      "https://picsum.photos/id/1025/800/500"
+    ],
+    "location": {
+      "latitude": -1.286389,
+      "longitude": 36.817223
+    },
+    "verified": true,
+    "created_at": "2025-09-12T11:20:00Z"
+  },
+
+]
+
+2. Events
+---------
+Endpoint: /api/events/
+Methods: GET, POST, PUT, DELETE (restricted by role)
+
+Sample Response (GET /api/events/):
+[
+  {
+    "id": 1,
+    "title": "Youth Evangelism Outreach",
+    "date": "2025-10-20",
+    "description": "A day of outreach and evangelism led by the youth group.",
+    "category": "Evangelism",
+    "congregation_id": 1,
+    "congregation_name": "Church of Christ, Garki",
+    "location": "Garki, Abuja"
+  },
+  {
+    "id": 2,
+    "title": "Bible Study and Fellowship",
+    "date": "2025-11-02",
+    "description": "Weekly Bible study session open to all members.",
+    "category": "Bible Study",
+    "congregation_id": 2,
+    "congregation_name": "Church of Christ, Ikoyi",
+    "location": "Ikoyi, Lagos"
+  }
+]
+
+3. Users
+---------
+Endpoint: /api/users/
+Methods: GET, POST, PUT, DELETE (restricted)
+
+Sample Response (GET /api/users/):
+[
+  {
+    "id": 1,
+    "username": "garki_admin",
+    "email": "garki.churchofchrist@example.com",
+    "role": "congregation_admin",
+    "congregation_id": 1,
+    "verified": true
+  },
+  {
+    "id": 2,
+    "username": "superadmin",
+    "email": "superadmin@churchofchrist.org",
+    "role": "super_admin"
+  }
+]
+
+4. Verification
+----------------
+Endpoint: /api/verifications/
+Methods: GET, POST, PUT
+
+Sample Response:
+[
+  {
+    "id": 1,
+    "congregation_id": 1,
+    "admin_email": "garki.churchofchrist@example.com",
+    "status": "approved",
+    "verified_by": "superadmin",
+    "created_at": "2025-10-05T12:00:00Z"
+  }
+]
+
+----------------------------------------------
+🧠 Additional Notes for the Backend Developer
+----------------------------------------------
+Use Django REST Framework (DRF) for API endpoints.
+Ensure all responses follow the JSON formats above.
+Use JWT Authentication (or session auth) for admin login.
+Add CORS configuration to allow frontend access.
+Include soft delete or active status flags for congregations and events.
+File uploads (for congregation images) should return accessible URLs.
+
+------------------------------------
+✅ Summary of API Responsibilities
+------------------------------------
+
+Module	                        Purpose	                               Access
+-------------------------------------------------------------------------------------------------
+Congregations	        CRUD congregation data	                    Super Admin / Verified Admin
+Events	                CRUD congregation-specific events	        Verified Admin
+Users	                Authentication, role management	            Super Admin
+Verification	        Manage approval of new congregations	    Super Admin
+Public API	            Fetch verified congregations & events	    Open (no auth)
+
+
+
+This backend will serve all frontend pages — Home, About, Directory, and Events — by providing verified and structured JSON data.
+
+src/
+│
+├── components/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── DirectoryFilterBar.jsx
+│   ├── EventFilterBar.jsx
+│   ├── LoadingSpinner.jsx
+│   └── MapSection.jsx
+│
+├── pages/
+│   ├── Home/
+│   │   ├── HeroSection.jsx
+│   │   ├── AboutPreview.jsx
+│   │   ├── FeaturedEvents.jsx
+│   │   ├── FeaturedCongregations.jsx
+│   │   └── CallToAction.jsx
+│   │
+│   ├── About/
+│   │   ├── MissionSection.jsx
+│   │   ├── BeliefsSection.jsx
+│   │   └── LeadershipSection.jsx
+│   │
+│   ├── Events/
+│   │   ├── EventList.jsx
+│   │   ├── EventCard.jsx
+│   │   └── EventDetailsModal.jsx
+│   │
+│   ├── Directory/
+│   │   ├── DirectoryList.jsx
+│   │   ├── CongregationCard.jsx
+│   │   ├── CongregationDetails.jsx
+│   │   └── MapSection.jsx
+│   │
+│   ├── Dashboard/
+│   │   ├── DashboardLayout.jsx
+│   │   ├── DashboardOverview.jsx
+│   │   ├── CongregationForm.jsx
+│   │   ├── EventManager.jsx
+│   │   ├── ImageUploader.jsx
+│   │   └── VerificationStatus.jsx
+│   │
+│   └── Admin/
+│       ├── AdminLayout.jsx
+│       ├── AdminCongregations.jsx
+│       ├── AdminVerifications.jsx
+│       ├── AdminEvents.jsx
+│       └── AdminUsers.jsx
+│
+├── utils/
+│   ├── api.js
+│   ├── formatDate.js
+│   └── filterUtils.js
+│
+├── App.jsx
+└── main.jsx
