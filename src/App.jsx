@@ -5,7 +5,7 @@ import AppRoutes from './routes.jsx'
 const App = () => {
   return (
     <div>
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col">
         <AppRoutes />
       </div>
       <PWABadge />

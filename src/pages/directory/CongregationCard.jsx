@@ -1,19 +1,22 @@
-import { MapPin, Phone, Mail, ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CongregationCard = ({ congregation }) => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {congregation.images && congregation.images.length > 0 && (
         <img
-          src={congregation.images[0]}
-          alt={congregation.congregation_name}
+          src={congregation?.images?.[0] || "/images/congregation-default.jpg"}
+          alt={congregation?.name || "Congregation"}
           className="w-full h-48 object-cover"
+          onError={(e) => (e.target.src = "/images/congregation-default.jpg")}
         />
       )}
 
       <div className="p-4">
-        <h2 className="text-xl font-semibold mb-2">{congregation.congregation_name}</h2>
+        <h2 className="text-xl font-semibold mb-2">
+          {congregation.congregation_name}
+        </h2>
 
         <div className="flex items-center text-gray-600 text-sm mb-2">
           <MapPin className="w-4 h-4 mr-1" />
@@ -46,7 +49,7 @@ const CongregationCard = ({ congregation }) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CongregationCard
+export default CongregationCard;

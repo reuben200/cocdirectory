@@ -1,0 +1,31 @@
+## 📡 API Endpoints
+
+### Authentication
+- `POST /api/auth/register/` - Register new congregation admin
+- `POST /api/auth/login/` - Login (returns JWT tokens)
+- `POST /api/auth/refresh/` - Refresh access token
+
+### Congregations
+- `GET /api/congregations/` - List all verified congregations (public)
+- `GET /api/congregations/{id}/` - Get congregation details (public)
+- `POST /api/congregations/` - Register new congregation (public)
+- `PUT /api/congregations/{id}/` - Update congregation (admin only)
+- `DELETE /api/congregations/{id}/` - Delete congregation (super admin only)
+- `POST /api/congregations/{id}/upload_image/` - Upload congregation image
+- `DELETE /api/congregations/{id}/delete_image/` - Delete congregation image
+
+### Events
+- `GET /api/events/` - List all events (public)
+- `GET /api/events/{id}/` - Get event details (public)
+- `POST /api/events/` - Create event (verified admin only)
+- `PUT /api/events/{id}/` - Update event (owner or super admin)
+- `DELETE /api/events/{id}/` - Delete event (owner or super admin)
+
+### Users
+- `GET /api/users/` - List users (super admin only)
+- `GET /api/users/me/` - Get current user info (authenticated)
+
+### Verifications
+- `GET /api/verifications/` - List all verifications (super admin only)
+- `GET /api/verifications/pending/` - Get pending verifications (super admin only)
+- `PATCH /api/verifications/{id}/update_status/` - Approve/reject verification (super admin only)

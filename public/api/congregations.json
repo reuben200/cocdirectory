@@ -11,21 +11,39 @@
     "contact_phone": "+2348012345678",
     "contact_email": "garki.churchofchrist@example.com",
     "worship_times": [
-      { "day": "Sunday", "activity": "Worship Service", "time": "9:00 AM - 12:00 PM" },
-      { "day": "Wednesday", "activity": "Bible Study", "time": "6:00 PM - 7:30 PM" }
+      {
+        "day": "Sunday",
+        "activity": "Worship Service",
+        "time": "9:00 AM - 12:00 PM"
+      },
+      {
+        "day": "Wednesday",
+        "activity": "Bible Study",
+        "time": "6:00 PM - 7:30 PM"
+      },
+      {
+        "day": "Friday",
+        "activity": "Prayer Meeting",
+        "time": "6:00 PM - 7:00 PM"
+      }
     ],
     "social_links": [
-      { "platform": "Facebook", "url": "https://facebook.com/garki", "icon": "facebook" },
-      { "platform": "Twitter", "url": "https://twitter.com/garki", "icon": "twitter" }
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/garki",
+        "icon": "facebook"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/garki",
+        "icon": "twitter"
+      }
     ],
     "images": [
-      "https://picsum.photos/id/1011/800/500",
-      "https://i.ibb.co/zWKFtVwD/thumb-1920-512463-1.jpg"
+      "https://cdn.pixabay.com/photo/2023/01/04/04/24/church-7695854_640.jpg",
+      "https://cdn.pixabay.com/photo/2023/04/28/10/03/chapel-7956274_1280.jpg"
     ],
-    "location": {
-      "latitude": 9.0667,
-      "longitude": 7.4833
-    },
+    "location": { "latitude": 9.0667, "longitude": 7.4833 },
     "verified": true,
     "created_at": "2025-09-10T08:00:00Z"
   },
@@ -42,19 +60,28 @@
     "contact_phone": "+254701234567",
     "contact_email": "nairobi.central@example.com",
     "worship_times": [
-      { "day": "Sunday", "activity": "Morning Worship", "time": "10:00 AM - 12:30 PM" },
-      { "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:30 PM - 7:00 PM" }
+      {
+        "day": "Sunday",
+        "activity": "Morning Worship",
+        "time": "10:00 AM - 12:30 PM"
+      },
+      {
+        "day": "Thursday",
+        "activity": "Midweek Bible Study",
+        "time": "5:30 PM - 7:00 PM"
+      }
     ],
     "social_links": [
-      { "platform": "Facebook", "url": "https://facebook.com/nairobicoc", "icon": "facebook" }
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/nairobicoc",
+        "icon": "facebook"
+      }
     ],
     "images": [
-      "https://picsum.photos/id/1025/800/500"
+      "https://cdn.pixabay.com/photo/2021/09/14/14/46/cologne-6624212_640.jpg"
     ],
-    "location": {
-      "latitude": -1.286389,
-      "longitude": 36.817223
-    },
+    "location": { "latitude": -1.286389, "longitude": 36.817223 },
     "verified": true,
     "created_at": "2025-09-12T11:20:00Z"
   },
@@ -71,17 +98,24 @@
     "contact_phone": "+233501234567",
     "contact_email": "accra.north@example.com",
     "worship_times": [
-      { "day": "Sunday", "activity": "Worship & Communion", "time": "8:30 AM - 11:30 AM" },
-      { "day": "Tuesday", "activity": "Bible Class", "time": "6:00 PM - 7:30 PM" }
+      {
+        "day": "Sunday",
+        "activity": "Worship & Communion",
+        "time": "8:30 AM - 11:30 AM"
+      },
+      {
+        "day": "Tuesday",
+        "activity": "Bible Class",
+        "time": "6:00 PM - 7:30 PM"
+      }
     ],
     "social_links": [],
     "images": [
-      "https://picsum.photos/id/1035/800/500"
+      "https://cdn.pixabay.com/photo/2022/05/19/12/47/church-7207330_640.jpg",
+      "https://cdn.pixabay.com/photo/2023/01/04/04/24/church-7695854_640.jpg",
+      "https://cdn.pixabay.com/photo/2018/10/04/11/15/lupins-3723426_640.jpg"
     ],
-    "location": {
-      "latitude": 5.6037,
-      "longitude": -0.1870
-    },
+    "location": { "latitude": 5.6037, "longitude": -0.187 },
     "verified": false,
     "created_at": "2025-09-15T14:05:00Z"
   },
@@ -98,47 +132,192 @@
     "contact_phone": "+447812345678",
     "contact_email": "london.central@example.com",
     "worship_times": [
-      { "day": "Sunday", "activity": "Morning Worship", "time": "10:30 AM - 12:45 PM" },
-      { "day": "Wednesday", "activity": "Fellowship & Study", "time": "7:00 PM - 8:30 PM" }
+      {
+        "day": "Sunday",
+        "activity": "Morning Worship",
+        "time": "10:30 AM - 12:45 PM"
+      },
+      {
+        "day": "Wednesday",
+        "activity": "Fellowship & Study",
+        "time": "7:00 PM - 8:30 PM"
+      }
     ],
     "social_links": [
-      { "platform": "Facebook", "url": "https://facebook.com/londoncoc", "icon": "facebook" },
-      { "platform": "YouTube", "url": "https://youtube.com/londoncoc", "icon": "youtube" }
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/londoncoc",
+        "icon": "facebook"
+      },
+      {
+        "platform": "YouTube",
+        "url": "https://youtube.com/londoncoc",
+        "icon": "youtube"
+      }
     ],
     "images": [
-      "https://picsum.photos/id/1041/800/500"
+      "https://cdn.pixabay.com/photo/2020/05/24/17/20/church-5215227_640.jpg",
+      "https://cdn.pixabay.com/photo/2022/06/11/06/41/communion-7255764_640.jpg"
     ],
-    "location": {
-      "latitude": 51.5074,
-      "longitude": -0.1278
-    },
+    "location": { "latitude": 51.5074, "longitude": -0.1278 },
     "verified": true,
     "created_at": "2025-10-01T09:15:00Z"
   },
 
   {
-"id": 5,
-"name": "Church of Christ, Nairobi Central",
-"country": "Kenya",
-"state": "Nairobi County",
-"lga": "Nairobi Central",
-"city": "Nairobi",
-"address": "Haile Selassie Ave, Nairobi Central, Nairobi",
-"preacher_name": "Bro. Daniel Mwangi",
-"contact_phone": "+254701234567",
-"contact_email": "nairobi.central.coc@example.com",
-"worship_times": [
-{ "day": "Sunday", "activity": "Worship Service", "time": "10:00 AM - 12:30 PM" },
-{ "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:00 PM - 6:30 PM" }
-],
-"social_links": [
-{ "platform": "Facebook", "url": "https://facebook.com/nairobcoc", "icon": "facebook" }
-],
-"images": [
-"https://cdn.pixabay.com/photo/2016/11/19/14/00/church-1832423_960_720.jpg"
-],
-"location": { "latitude": -1.286389, "longitude": 36.817223 },
-"verified": true,
-"created_at": "2025-08-15T09:20:00Z"
+    "id": 5,
+    "name": "Church of Christ, Nairobi Central",
+    "country": "Kenya",
+    "state": "Nairobi County",
+    "lga": "Nairobi Central",
+    "city": "Nairobi",
+    "address": "Haile Selassie Ave, Nairobi Central, Nairobi",
+    "preacher_name": "Bro. Daniel Mwangi",
+    "contact_phone": "+254701234567",
+    "contact_email": "nairobi.central.coc@example.com",
+    "worship_times": [
+      {
+        "day": "Sunday",
+        "activity": "Worship Service",
+        "time": "10:00 AM - 12:30 PM"
+      },
+      {
+        "day": "Thursday",
+        "activity": "Midweek Bible Study",
+        "time": "5:00 PM - 6:30 PM"
+      }
+    ],
+    "social_links": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/nairobcoc",
+        "icon": "facebook"
+      }
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2014/04/29/16/48/chanaz-334496_640.jpg",
+      "https://cdn.pixabay.com/photo/2013/12/04/11/47/opole-223365_640.jpg"
+    ],
+    "location": { "latitude": -1.286389, "longitude": 36.817223 },
+    "verified": true,
+    "created_at": "2025-08-15T09:20:00Z"
+  },
+  {
+    "id": 6,
+    "name": "Church of Christ, Johannesburg South",
+    "country": "South Africa",
+    "state": "Gauteng",
+    "lga": "Johannesburg",
+    "city": "Johannesburg",
+    "address": "7 Vilakazi Street, Soweto, Johannesburg",
+    "preacher_name": "Bro. Majola Dlamini",
+    "contact_phone": "+27721234567",
+    "contact_email": "joburgsouth.coc@example.com",
+    "worship_times": [
+      {
+        "day": "Sunday",
+        "activity": "Morning Worship",
+        "time": "9:00 AM - 12:00 PM"
+      },
+      {
+        "day": "Wednesday",
+        "activity": "Midweek Study",
+        "time": "6:00 PM - 7:30 PM"
+      }
+    ],
+    "social_links": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/joburgcoc",
+        "icon": "facebook"
+      }
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2020/03/28/11/32/emotions-4976682_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/10/28/22/14/church-4585785_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/11/09/15/31/church-6781760_640.jpg"
+    ],
+    "location": { "latitude": -26.2041, "longitude": 28.0473 },
+    "verified": true,
+    "created_at": "2025-09-28T10:00:00Z"
+  },
+  {
+    "id": 7,
+    "name": "Church of Christ, Manila East",
+    "country": "Philippines",
+    "state": "Metro Manila",
+    "lga": "Quezon City",
+    "city": "Manila",
+    "address": "35 Katipunan Ave, Quezon City, Manila",
+    "preacher_name": "Bro. Joseph Dela Cruz",
+    "contact_phone": "+639171234567",
+    "contact_email": "manilaeast.coc@example.ph",
+    "worship_times": [
+      {
+        "day": "Sunday",
+        "activity": "Worship Service",
+        "time": "8:30 AM - 11:30 AM"
+      },
+      {
+        "day": "Friday",
+        "activity": "Evening Prayer",
+        "time": "6:00 PM - 7:30 PM"
+      }
+    ],
+    "social_links": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/manilacoc",
+        "icon": "facebook"
+      }
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/06/13/04/33/building-2397609_640.jpg",
+      "https://cdn.pixabay.com/photo/2014/01/18/20/31/church-247715_640.jpg",
+      "https://cdn.pixabay.com/photo/2022/05/24/22/28/cross-7219450_640.jpg"
+    ],
+    "location": { "latitude": 14.5995, "longitude": 120.9842 },
+    "verified": true,
+    "created_at": "2025-09-30T07:00:00Z"
+  },
+  {
+    "id": 8,
+    "name": "Church of Christ, Berlin Mitte",
+    "country": "Germany",
+    "state": "Berlin",
+    "lga": "Mitte",
+    "city": "Berlin",
+    "address": "22 Friedrichstrasse, Berlin 10117",
+    "preacher_name": "Bro. Gerald Müller",
+    "contact_phone": "+49301234567",
+    "contact_email": "berlin.coc@example.de",
+    "worship_times": [
+      {
+        "day": "Sunday",
+        "activity": "Morning Worship",
+        "time": "10:00 AM - 12:30 PM"
+      },
+      {
+        "day": "Wednesday",
+        "activity": "Bible Study",
+        "time": "6:00 PM - 8:00 PM"
+      }
+    ],
+    "social_links": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/berlincoc",
+        "icon": "facebook"
+      }
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2020/04/28/12/53/iceland-5104343_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/09/09/01/41/flower-4462296_640.jpg",
+      "https://cdn.pixabay.com/photo/2022/10/04/18/12/organ-7498822_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/03/11/17/13/alpine-4049048_640.jpg"
+    ],
+    "location": { "latitude": 52.52, "longitude": 13.405 },
+    "verified": false,
+    "created_at": "2025-10-02T08:15:00Z"
   }
 ]

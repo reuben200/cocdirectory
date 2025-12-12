@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function EventCard({event}){
   return (
     <article className="bg-white rounded-lg shadow overflow-hidden">
-      <img src={event.image} alt={event.title} className="w-full h-40 object-cover" />
+      <img src={event.image || `/images/events-default.jpg`} alt={event.title} className="w-full h-40 object-cover" />
       <div className="p-4">
         <h3 className="text-lg font-semibold">{event.title}</h3>
         <p className="text-sm text-gray-600">{event.congregation_name} — {event.location}</p>

@@ -1,16 +1,126 @@
-# React + Vite
+# Church Directory & Events Platform (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a **React-based frontend application** for a global Church Directory and Events platform. It allows users to explore congregations around the world, view upcoming church events, and access detail pages for each congregation.
 
-Currently, two official plugins are available:
+> ✅ This is the **frontend-only implementation**, currently powered by mock JSON data stored in the `public/` folder to simulate API calls until the backend is integrated.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Features
 
-## React Compiler
+- 🌍 Global church directory with detailed congregation profiles
+- 🗓️ Events listing with filtering by congregation, date, and category
+- 🔎 Search & filter for congregations
+- 📍 Map preview placeholder for congregation location
+- 🧩 Modular file/component structure (scalable)
+- ⚡ Fast mock data fetching from `/public` folder
+- ✅ TailwindCSS styled UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🗂 Project Structure (Relevant Files)
+```
+src/
+├── components/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── DirectoryFilterBar.jsx
+│   ├── EventFilterBar.jsx
+│   ├── LoadingSpinner.jsx
+│   └── MapSection.jsx
+│
+├── pages/
+│   ├── Home/
+│   ├── Directory/
+│   ├── Events/
+│   └── Dashboard/ (coming later)
+│
+├── utils/
+│   ├── api.js
+│   ├── formatDate.js
+│   └── filterUtils.js
+│
+├── App.jsx
+└── main.jsx
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Mock data is stored in:
+```
+public/
+├── congregations.json
+├── events.json
+└── verifications.json
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the repository
+```bash
+git clone <repo-url>
+cd project-folder
+```
+
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
+
+### 3️⃣ Start Development Server
+```bash
+npm run dev
+```
+
+The app will be available at:
+```
+http://localhost:5173/
+```
+
+---
+
+## 📁 Mock Data Fetching
+This project fetches mock JSON files directly from the `public/` folder using absolute paths:
+
+```js
+fetch("/congregations.json")
+```
+
+This simulates real API calls, so replacing it with a backend endpoint later will be seamless.
+
+---
+
+## 🔧 Tech Stack
+| Tech | Purpose |
+|------|---------|
+| React | UI Library |
+| React Router | Navigation / Routing |
+| TailwindCSS | Styling |
+| Lucide React | Icons |
+| JSON Mock Files | Temporary data source |
+
+---
+
+No major refactoring required.
+
+---
+
+## 📍 Next Steps
+- ✅ Build Home, Directory & Events pages (in progress)
+- ✅ Add filtering, sorting & search
+- ⏳ Add Dashboard pages for church admins
+- ⏳ Authentication (login + roles)
+- ⏳ Real map integration (Leaflet or Google Maps)
+- ⏳ Connect to backend API
+
+---
+
+## 🤝 Contributing
+Contributions are welcome once the backend structure is finalized. Frontend styling, components, and optimization are open for extension.
+
+---
+
+## 📄 License
+This project will be open-source after backend completion (license to be added).
+
+---
+
+**Built with ❤️ to help you locate a congregation nearest to you globally**

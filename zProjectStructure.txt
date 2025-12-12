@@ -1,15 +1,15 @@
 🕊️ Project Title:
 ==================================
-Church of Christ Global Directory
+Church of Christ Directory
 ==================================
 
 🌍 Overview
 =============
-The Church of Christ Global Directory is a web platform designed to serve as an official, searchable directory for congregations of the Church of Christ across different locations (countries, states, LGAs, etc.).
+The Church of Christ Global Directory is a web platform designed to serve as a platform where individuals could easily visit to find a church of Christ near them, it is a searchable directory for congregations of the Church of Christ across different locations (countries, states, LGAs, etc.).
 
 Each congregation can register, get verified, and gain access to a dashboard where they can manage their congregation’s information and post local events.
 
-The frontend (built in React + TailwindCSS) will consume data from the Django backend via REST API endpoints returning JSON responses.
+The frontend (built in React + TailwindCSS) will consume data from firebase.
 
 🎯 Key Objectives
 ==================
@@ -39,7 +39,7 @@ Once verified, can edit congregation info and manage local events.
 Visitor/User
 -------------
 Can view all congregations and events without login.
-Can search/filter by name, location, preacher, or keyword.
+Can search/filter congregagtion by name, location, preacher, or keyword.
 
 ⚙️ Authentication & Verification Flow
 ======================================
@@ -58,33 +58,48 @@ Methods: GET, POST, PUT, DELETE (restricted by role)
 
 Sample Response (GET /api/congregations/):
 [
-  {
-    "id": 2,
-    "name": "Church of Christ, Nairobi Central",
-    "country": "Kenya",
-    "state": "Nairobi County",
-    "lga": null,
-    "city": "Nairobi",
-    "address": "Moi Avenue, Nairobi Central",
-    "preacher_name": "Bro. Peter Mwangi",
-    "contact_phone": "+254701234567",
-    "contact_email": "nairobi.central@example.com",
+   {
+    "id": 1,
+    "name": "Church of Christ, Garki",
+    "country": "Nigeria",
+    "state": "FCT",
+    "lga": "Garki",
+    "city": "Abuja",
+    "address": "Plot 14, Area 3, Garki, Abuja",
+    "preacher_name": "Bro. John Okoro",
+    "contact_phone": "+2348012345678",
+    "contact_email": "garki.churchofchrist@example.com",
     "worship_times": [
-      { "day": "Sunday", "activity": "Morning Worship", "time": "10:00 AM - 12:30 PM" },
-      { "day": "Thursday", "activity": "Midweek Bible Study", "time": "5:30 PM - 7:00 PM" }
+      {
+        "day": "Sunday",
+        "activity": "Worship Service",
+        "time": "9:00 AM - 12:00 PM"
+      },
+      {
+        "day": "Wednesday",
+        "activity": "Bible Study",
+        "time": "6:00 PM - 7:30 PM"
+      }
     ],
     "social_links": [
-      { "platform": "Facebook", "url": "https://facebook.com/nairobicoc", "icon": "facebook" }
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/garki",
+        "icon": "facebook"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/garki",
+        "icon": "twitter"
+      }
     ],
     "images": [
-      "https://picsum.photos/id/1025/800/500"
+      "https://cdn.pixabay.com/photo/2023/01/04/04/24/church-7695854_640.jpg",
+      "https://cdn.pixabay.com/photo/2023/04/28/10/03/chapel-7956274_1280.jpg"
     ],
-    "location": {
-      "latitude": -1.286389,
-      "longitude": 36.817223
-    },
+    "location": { "latitude": 9.0667, "longitude": 7.4833 },
     "verified": true,
-    "created_at": "2025-09-12T11:20:00Z"
+    "created_at": "2025-09-10T08:00:00Z"
   },
 
 ]
@@ -98,13 +113,16 @@ Sample Response (GET /api/events/):
 [
   {
     "id": 1,
-    "title": "Youth Evangelism Outreach",
-    "date": "2025-10-20",
-    "description": "A day of outreach and evangelism led by the youth group.",
-    "category": "Evangelism",
     "congregation_id": 1,
     "congregation_name": "Church of Christ, Garki",
-    "location": "Garki, Abuja"
+    "title": "Youth Evangelism",
+    "date": "2025-10-20",
+    "time": "09:00",
+    "image": "https://cdn.pixabay.com/photo/2015/10/11/21/29/bible-983105_960_720.jpg",
+    "description": "A day of outreach and evangelism led by the youth group. Members will share the gospel within nearby communities.",
+    "category": "Evangelism",
+    "location": "Garki, Abuja",
+    "created_at": "2025-09-30T10:00:00Z"
   },
   {
     "id": 2,
