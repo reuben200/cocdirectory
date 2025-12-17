@@ -31,15 +31,15 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/home" className="flex items-center space-x-2 group">
-            <div className="h-10 w-10 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Church className="h-6 w-6 text-white" />
+            <div className=" rounded-full flex items-center justify-center border-0">
+              <img src="/images/coc-logo.webp" alt="logo image" className="w-15 rounded-full mx-auto my-6" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">
                 Church Directory
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Church of Christ
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Churches of Christ
               </p>
             </div>
           </Link>

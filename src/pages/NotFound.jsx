@@ -14,7 +14,7 @@ const NotFound = () => {
                 {/* 404 Number */}
                 <div className="relative mb-8">
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-[200px] md:text-[300px] font-black text-gray-400/30 dark:text-gray-800/30 select-none">
+                        <div className="text-[200px] md:text-[300px] font-black text-gray-400/30 dark:text-gray-600/30 select-none">
                             404
                         </div>
                     </div>
@@ -22,8 +22,8 @@ const NotFound = () => {
                         <div className="inline-flex items-center justify-center">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-purple-600 rounded-full blur-2xl opacity-60 animate-pulse"></div>
-                                <div className="relative bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 p-8 rounded-full shadow-2xl rounded-full">
-                                    <Church className="h-24 w-24 md:h-32 md:w-32 text-white" />
+                                <div className="relative bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 p-1 rounded-full shadow-2xl w-30 md:w-44">
+                                    <img src='/images/coc-logo.webp' className="w-full text-white rounded-full" />
                                 </div>
                             </div>
                         </div>

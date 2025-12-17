@@ -1,52 +1,112 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../utils/firebaseConfig";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 
-// Create context
+
 const AuthContext = createContext();
 
-// Provider component
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("church_user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+const [user, setUser] = useState(null);
+const [profile, setProfile] = useState(null);
+const [congregation, setCongregation] = useState(null);
+const [loading, setLoading] = useState(true);
 
-  const [loading, setLoading] = useState(false);
+const authReady = !loading && user !== null && profile !== null;
 
-  const login = async (username) => {
+
+useEffect(() => {
+  const unsub = onAuthStateChanged(auth, async (authUser) => {
     setLoading(true);
 
-    // Fetch mock users
-    try {
-      const response = await fetch("/users.json");
-      const users = await response.json();
-      const foundUser = users.find((u) => u.username === username);
+    await updateDoc(doc(db, "users", authUser.uid), {
+        last_login: serverTimestamp()
+      });
 
-      if (!foundUser) {
-        setLoading(false);
-        return false;
-      }
-
-      setUser(foundUser);
-      localStorage.setItem("church_user", JSON.stringify(foundUser));
-    } catch (error) {
-      console.error("Login error:", error);
+    if (!authUser) {
+      setUser(null);
+      setProfile(null);
+      setCongregation(null);
+      setLoading(false);
+      return;
     }
 
-    setLoading(false);
-  };
+    setUser(authUser);
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("church_user");
-  };
+    try {
+      const userSnap = await getDoc(doc(db, "users", authUser.uid));
+      const userData = userSnap.exists() ? userSnap.data() : {};
 
-  const value = { user, login, logout, loading, isAuthenticated: !!user };
+      const role = userData.role || null;
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+      // 1️⃣ Set profile FIRST
+      setProfile({ ...userData, role });
+
+      console.log("AUTH STATE", {
+        uid: authUser.uid,
+        role,
+        profile: { ...userData, role }
+      });
+
+
+      // 2️⃣ Handle congregation ONLY for congregation admins
+      if (role === "congregation_admin" && userData.congregation_id) {
+        try {
+          const congSnap = await getDoc(
+            doc(db, "congregations", userData.congregation_id)
+          );
+          setCongregation(congSnap.exists() ? congSnap.data() : null);
+        } catch {
+          setCongregation(null);
+        }
+      } else {
+        // super_admin OR no congregation
+        setCongregation(null);
+      }
+
+    } catch (error) {
+      console.error("Auth bootstrap failed:", error);
+      setProfile(null);
+      setCongregation(null);
+    }finally {
+          setLoading(false);
+        }
+      });
+
+      return () => unsub();
+}, []);
+
+
+
+const login = (email, password) =>
+signInWithEmailAndPassword(auth, email, password);
+
+
+const logout = () => signOut(auth);
+
+
+return (
+<AuthContext.Provider
+  value={{
+    user,
+    profile,
+    congregation,
+    loading,
+    authReady,
+    login,
+    logout,
+    isAuthenticated: !!user,
+    isSuperAdmin: profile?.role === "super_admin",
+    isCongregationAdmin: profile?.role === "congregation_admin",
+  }}
+>
+
+{children}
+</AuthContext.Provider>
+);
 };
 
-// Custom hook for easy usage
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+
+export const useAuth = () => useContext(AuthContext);
 export default AuthContext;

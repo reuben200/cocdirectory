@@ -4,7 +4,7 @@ import AppRoutes from './routes.jsx'
 
 const App = () => {
   return (
-    <div>
+    <div className='bg-gray-100 dark:bg-gray-800'>
       <div className="min-h-screen flex flex-col">
         <AppRoutes />
       </div>
