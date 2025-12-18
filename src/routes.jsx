@@ -95,7 +95,7 @@ const AppRoutes = () => {
           />
         }
       >
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard/*" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="verification" element={<Verification />} />
           <Route path="congregation" element={<CongregationProfile />} />

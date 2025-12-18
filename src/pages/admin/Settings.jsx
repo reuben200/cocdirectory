@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, updateDoc, serverTimestamp, addDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -25,6 +25,20 @@ const Settings = () => {
     load();
   }, []);
 
+  const logSettingsChange = async () => {
+    if (!profile) return;
+
+    await addDoc(collection(db, "activity_logs"), {
+      actor_uid: profile.uid,
+      actor_name: profile.name,
+      role: profile.role,
+      action: "update_platform_settings",
+      target_type: "settings",
+      target_id: "platform",
+      timestamp: serverTimestamp(),
+    });
+  };
+
   const update = async () => {
     if (!canEdit) return;
 
@@ -42,6 +56,8 @@ const Settings = () => {
       }
     });
 
+    await logSettingsChange();
+    
     setSaving(false);
   };
 

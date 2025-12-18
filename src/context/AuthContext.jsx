@@ -12,6 +12,7 @@ const [user, setUser] = useState(null);
 const [profile, setProfile] = useState(null);
 const [congregation, setCongregation] = useState(null);
 const [loading, setLoading] = useState(true);
+const [platformSettings, setPlatformSettings] = useState(null);
 
 const authReady = !loading && user !== null && profile !== null;
 
@@ -19,6 +20,11 @@ const authReady = !loading && user !== null && profile !== null;
 useEffect(() => {
   const unsub = onAuthStateChanged(auth, async (authUser) => {
     setLoading(true);
+
+    const settingsSnap = await getDoc(doc(db, "settings", "platform"));
+    if (settingsSnap.exists()) {
+      setPlatformSettings(settingsSnap.data());
+    }
 
     await updateDoc(doc(db, "users", authUser.uid), {
         last_login: serverTimestamp()
@@ -99,6 +105,9 @@ return (
     isAuthenticated: !!user,
     isSuperAdmin: profile?.role === "super_admin",
     isCongregationAdmin: profile?.role === "congregation_admin",
+    platformSettings,
+    isMaintenanceMode: platformSettings?.system?.maintenance_mode === true,
+
   }}
 >
 

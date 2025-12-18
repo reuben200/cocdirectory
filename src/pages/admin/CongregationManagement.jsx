@@ -9,7 +9,7 @@ import {
   query,
   orderBy,
   where,
-  writeBatch
+  writeBatch,
 } from "firebase/firestore";
 import {
   CheckCircle,
@@ -26,14 +26,13 @@ import {
   FileText,
   ChevronLeft,
   ChevronRight,
-  Trash2
 } from "lucide-react";
 import { db } from "../../utils/firebaseConfig";
 import { useAuth } from "../../context/AuthContext";
 
-/* =====================================================
+/* =========================
    Helpers
-===================================================== */
+========================= */
 
 const formatDate = (value) => {
   if (!value) return "—";
@@ -43,9 +42,12 @@ const formatDate = (value) => {
 
 const StatusBadge = ({ status }) => {
   const styles = {
-    verified: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800",
-    pending: "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800",
-    rejected: "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800",
+    verified:
+      "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800",
+    pending:
+      "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800",
+    rejected:
+      "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800",
   };
 
   const icons = {
@@ -57,31 +59,33 @@ const StatusBadge = ({ status }) => {
   const Icon = icons[status];
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border ${styles[status]}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border ${styles[status]}`}
+    >
       <Icon size={14} />
       <span className="capitalize">{status}</span>
     </span>
   );
 };
 
-/* =====================================================
+/* =========================
    Component
-===================================================== */
+========================= */
 
 const CongregationManagement = () => {
+  const { profile, platformSettings } = useAuth();
+
   const [congregations, setCongregations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  
-  // Pagination
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Bulk Actions
   const [selectedIds, setSelectedIds] = useState(new Set());
-  const [bulkAction, setBulkAction] = useState(null); // { action: "approve" | "reject" | "delete" }
+  const [bulkAction, setBulkAction] = useState(null);
 
   const [confirm, setConfirm] = useState(null);
   const [reason, setReason] = useState("");
@@ -89,11 +93,9 @@ const CongregationManagement = () => {
   const [historyTarget, setHistoryTarget] = useState(null);
   const [history, setHistory] = useState([]);
 
-  const { profile } = useAuth();
-
-  /* =====================================================
+  /* =========================
      Fetch Congregations
-  ===================================================== */
+  ========================= */
 
   useEffect(() => {
     const fetchCongregations = async () => {
@@ -105,7 +107,7 @@ const CongregationManagement = () => {
       const snap = await getDocs(q);
 
       setCongregations(
-        snap.docs.map(d => {
+        snap.docs.map((d) => {
           const data = d.data();
           return {
             id: d.id,
@@ -114,7 +116,7 @@ const CongregationManagement = () => {
               ? "verified"
               : data.rejected
               ? "rejected"
-              : "pending"
+              : "pending",
           };
         })
       );
@@ -125,12 +127,26 @@ const CongregationManagement = () => {
     fetchCongregations();
   }, []);
 
-  /* =====================================================
-     Derived Filtered Data & Analytics
-  ===================================================== */
+  /* =========================
+      Stats
+    ========================= */
+
+    const stats = useMemo(() => {
+      return {
+        total: congregations.length,
+        verified: congregations.filter(c => c.status === "verified").length,
+        pending: congregations.filter(c => c.status === "pending").length,
+        rejected: congregations.filter(c => c.status === "rejected").length,
+      };
+    }, [congregations]);
+
+
+  /* =========================
+     Filters & Pagination
+  ========================= */
 
   const filteredCongregations = useMemo(() => {
-    return congregations.filter(c => {
+    return congregations.filter((c) => {
       const matchesSearch =
         c.name?.toLowerCase().includes(search.toLowerCase()) ||
         c.city?.toLowerCase().includes(search.toLowerCase());
@@ -142,65 +158,49 @@ const CongregationManagement = () => {
     });
   }, [congregations, search, statusFilter]);
 
-  // Pagination
   const paginatedCongregations = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredCongregations.slice(startIndex, endIndex);
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredCongregations.slice(start, start + itemsPerPage);
   }, [filteredCongregations, currentPage, itemsPerPage]);
 
-  const totalPages = Math.ceil(filteredCongregations.length / itemsPerPage);
+  const totalPages = Math.ceil(
+    filteredCongregations.length / itemsPerPage
+  );
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, statusFilter]);
 
-  const stats = useMemo(() => {
-    return {
-      total: congregations.length,
-      verified: congregations.filter(c => c.status === "verified").length,
-      pending: congregations.filter(c => c.status === "pending").length,
-      rejected: congregations.filter(c => c.status === "rejected").length,
-    };
-  }, [congregations]);
-
-  /* =====================================================
-     Selection Handlers
-  ===================================================== */
+  /* =========================
+     Selection
+  ========================= */
 
   const toggleSelection = (id) => {
-    const newSelected = new Set(selectedIds);
-    if (newSelected.has(id)) {
-      newSelected.delete(id);
-    } else {
-      newSelected.add(id);
-    }
-    setSelectedIds(newSelected);
+    const next = new Set(selectedIds);
+    next.has(id) ? next.delete(id) : next.add(id);
+    setSelectedIds(next);
   };
 
   const toggleSelectAll = () => {
     if (selectedIds.size === paginatedCongregations.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(paginatedCongregations.map(c => c.id)));
+      setSelectedIds(new Set(paginatedCongregations.map((c) => c.id)));
     }
   };
 
-  const clearSelection = () => {
-    setSelectedIds(new Set());
-  };
+  const clearSelection = () => setSelectedIds(new Set());
 
-  /* =====================================================
-     Actions
-  ===================================================== */
+  /* =========================
+     Logging
+  ========================= */
 
   const logActivity = async (action, congregation) => {
     if (!profile) return;
 
     await addDoc(collection(db, "activity_logs"), {
       actor_uid: profile.uid,
-      actor_name: profile.name || "Super Admin",
+      actor_name: profile.name,
       action,
       target_type: "congregation",
       target_id: congregation.id,
@@ -209,87 +209,98 @@ const CongregationManagement = () => {
     });
   };
 
+  /* =========================
+     Single Actions
+  ========================= */
+
   const approve = async (c) => {
     await updateDoc(doc(db, "congregations", c.id), {
       verified: true,
       rejected: false,
-      verified_at: serverTimestamp()
+      verified_at: serverTimestamp(),
     });
 
     await addDoc(collection(db, "verifications"), {
       congregation_id: c.id,
       action: "approved",
-      reason: null,
-      reviewed_at: serverTimestamp()
+      reviewed_at: serverTimestamp(),
     });
 
-    setCongregations(prev =>
-      prev.map(x =>
+    await logActivity("approve_congregation", c);
+
+    setCongregations((prev) =>
+      prev.map((x) =>
         x.id === c.id ? { ...x, status: "verified" } : x
       )
     );
 
     setConfirm(null);
-    await logActivity("approve_congregation", c);
   };
 
   const reject = async (c) => {
     await updateDoc(doc(db, "congregations", c.id), {
       verified: false,
-      rejected: true
+      rejected: true,
     });
 
     await addDoc(collection(db, "verifications"), {
       congregation_id: c.id,
       action: "rejected",
       reason,
-      reviewed_at: serverTimestamp()
+      reviewed_at: serverTimestamp(),
     });
 
-    setCongregations(prev =>
-      prev.map(x =>
+    await logActivity("reject_congregation", c);
+
+    setCongregations((prev) =>
+      prev.map((x) =>
         x.id === c.id ? { ...x, status: "rejected" } : x
       )
     );
-
-    await logActivity("reject_congregation", c);
 
     setReason("");
     setConfirm(null);
   };
 
-  /* =====================================================
-     Bulk Actions
-  ===================================================== */
+  /* =========================
+     Bulk Actions (FIXED)
+  ========================= */
 
   const handleBulkApprove = async () => {
-    const batch = writeBatch(db);
-    const selectedCongregations = congregations.filter(c => selectedIds.has(c.id));
+    if (
+      profile?.role !== "super_admin" ||
+      !platformSettings?.approvals?.allow_bulk_actions ||
+      selectedIds.size === 0
+    )
+      return;
 
-    selectedCongregations.forEach(c => {
-      const congRef = doc(db, "congregations", c.id);
-      batch.update(congRef, {
+    const batch = writeBatch(db);
+    const selected = congregations.filter((c) =>
+      selectedIds.has(c.id)
+    );
+
+    selected.forEach((c) => {
+      batch.update(doc(db, "congregations", c.id), {
         verified: true,
         rejected: false,
-        verified_at: serverTimestamp()
+        verified_at: serverTimestamp(),
       });
     });
 
     await batch.commit();
 
-    // Log verifications
-    for (const c of selectedCongregations) {
+    for (const c of selected) {
       await addDoc(collection(db, "verifications"), {
         congregation_id: c.id,
         action: "approved",
         reason: "Bulk approval",
-        reviewed_at: serverTimestamp()
+        reviewed_at: serverTimestamp(),
       });
       await logActivity("bulk_approve_congregation", c);
     }
 
-    setCongregations(prev =>
-      prev.map(x =>
+    setCongregations((prev) =>
+      prev.map((x) =>
         selectedIds.has(x.id) ? { ...x, status: "verified" } : x
       )
     );
@@ -299,32 +310,39 @@ const CongregationManagement = () => {
   };
 
   const handleBulkReject = async () => {
-    const batch = writeBatch(db);
-    const selectedCongregations = congregations.filter(c => selectedIds.has(c.id));
+    if (
+      profile?.role !== "super_admin" ||
+      !platformSettings?.approvals?.allow_bulk_actions ||
+      selectedIds.size === 0
+    )
+      return;
 
-    selectedCongregations.forEach(c => {
-      const congRef = doc(db, "congregations", c.id);
-      batch.update(congRef, {
+    const batch = writeBatch(db);
+    const selected = congregations.filter((c) =>
+      selectedIds.has(c.id)
+    );
+
+    selected.forEach((c) => {
+      batch.update(doc(db, "congregations", c.id), {
         verified: false,
-        rejected: true
+        rejected: true,
       });
     });
 
     await batch.commit();
 
-    // Log verifications
-    for (const c of selectedCongregations) {
+    for (const c of selected) {
       await addDoc(collection(db, "verifications"), {
         congregation_id: c.id,
         action: "rejected",
         reason: reason || "Bulk rejection",
-        reviewed_at: serverTimestamp()
+        reviewed_at: serverTimestamp(),
       });
       await logActivity("bulk_reject_congregation", c);
     }
 
-    setCongregations(prev =>
-      prev.map(x =>
+    setCongregations((prev) =>
+      prev.map((x) =>
         selectedIds.has(x.id) ? { ...x, status: "rejected" } : x
       )
     );
@@ -334,9 +352,9 @@ const CongregationManagement = () => {
     setBulkAction(null);
   };
 
-  /* =====================================================
+  /* =========================
      History
-  ===================================================== */
+  ========================= */
 
   const openHistory = async (c) => {
     setHistoryTarget(c);
@@ -348,25 +366,17 @@ const CongregationManagement = () => {
     );
 
     const snap = await getDocs(q);
-
-    setHistory(
-      snap.docs.map(d => ({ id: d.id, ...d.data() }))
-    );
+    setHistory(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
   };
 
-  /* =====================================================
+  /* =========================
      Render
-  ===================================================== */
+  ========================= */
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-8">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-            <div className="w-5 h-5 border-2 border-slate-300 dark:border-slate-600 border-t-slate-600 dark:border-t-slate-300 rounded-full animate-spin"></div>
-            Loading congregations…
-          </div>
-        </div>
+      <div className="p-8 text-center text-slate-500">
+        Loading congregations…
       </div>
     );
   }
@@ -420,49 +430,54 @@ const CongregationManagement = () => {
         </div>
 
         {/* Filters & Bulk Actions */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-3.5 text-slate-400 dark:text-slate-500" size={18} />
-              <input
-                className="w-full pl-11 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all"
-                placeholder="Search by name or city..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-
-            {/* Status Filter */}
-            <select
-              className="px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all lg:w-48"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="all">All Status</option>
-              <option value="verified">Verified</option>
-              <option value="pending">Pending</option>
-              <option value="rejected">Rejected</option>
-            </select>
-
-            {/* Items per page */}
-            <select
-              className="px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all lg:w-32"
-              value={itemsPerPage}
-              onChange={(e) => {
-                setItemsPerPage(Number(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={10}>10 / page</option>
-              <option value={25}>25 / page</option>
-              <option value={50}>50 / page</option>
-              <option value={100}>100 / page</option>
-            </select>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Search */}
+          <div className="relative flex-1">
+            <Search
+              className="absolute left-4 top-3.5 text-slate-400 dark:text-slate-500"
+              size={18}
+            />
+            <input
+              className="w-full pl-11 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all"
+              placeholder="Search by name or city..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
 
-          {/* Bulk Actions Bar */}
-          {selectedIds.size > 0 && (
+          {/* Status Filter */}
+          <select
+            className="px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all lg:w-48"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="all">All Status</option>
+            <option value="verified">Verified</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+          </select>
+
+          {/* Items per page */}
+          <select
+            className="px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-indigo-400/50 focus:border-transparent transition-all lg:w-32"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={10}>10 / page</option>
+            <option value={25}>25 / page</option>
+            <option value={50}>50 / page</option>
+            <option value={100}>100 / page</option>
+          </select>
+        </div>
+
+        {/* ✅ Bulk Actions Bar — CORRECTLY WRAPPED */}
+        {profile?.role === "super_admin" &&
+          platformSettings?.approvals?.allow_bulk_actions &&
+          selectedIds.size > 0 && (
             <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="flex items-center gap-3">
@@ -476,16 +491,18 @@ const CongregationManagement = () => {
                     Clear
                   </button>
                 </div>
+
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setBulkAction({ action: "approve" })}
+                    onClick={handleBulkApprove}
                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition-colors"
                   >
                     <ThumbsUp size={16} />
                     Bulk Approve
                   </button>
+
                   <button
-                    onClick={() => setBulkAction({ action: "reject" })}
+                    onClick={handleBulkReject}
                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-semibold transition-colors"
                   >
                     <ThumbsDown size={16} />
@@ -495,8 +512,7 @@ const CongregationManagement = () => {
               </div>
             </div>
           )}
-        </div>
-
+      </div>
         {/* Table */}
         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
