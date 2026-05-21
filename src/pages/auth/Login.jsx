@@ -38,7 +38,11 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-950 p-6">
       <div className="bg-gray-900 p-8 rounded-xl w-full max-w-md border border-gray-700 shadow-xl">
         <div className="flex flex-col items-center">
-          <Church className="text-blue-400 w-14 h-14" />
+          <img
+              src="/images/coc-logo.webp"
+              alt="Church of Christ Logo"
+              className="w-16 h-16 rounded-full object-cover"
+            />
           <h2 className="text-2xl font-bold text-white mt-4">Sign In</h2>
           <p className="text-gray-400 text-sm">Church of Christ Directory</p>
         </div>
