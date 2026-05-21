@@ -53,7 +53,7 @@ const Login = () => {
               value={form.email}
               onChange={handleChange}
               required
-              className="rounded-md bg-white pl-20"
+              className="rounded-md bg-white w-full p-md pl-20"
             />
           </div>
           <div className="relative">
@@ -65,7 +65,7 @@ const Login = () => {
               value={form.password}
               onChange={handleChange}
               required
-              className="rounded-md bg-white pl-10"
+              className="rounded-md bg-white w-full p-md pl-10"
             />
             <button
               type="button"
