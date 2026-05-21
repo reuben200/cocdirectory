@@ -96,12 +96,12 @@ const NotFound = () => {
                         </Link>
 
                         <Link
-                            to="/about"
+                            to="/"
                             className="group p-4 bg-linear-to-br from-teal-50 to-emerald-50 dark:from-teal-900/30 dark:to-emerald-900/30 rounded-xl hover:shadow-lg transition-all duration-300 border border-teal-200/50 dark:border-teal-700/50"
                         >
                             <Home className="h-8 w-8 text-teal-600 dark:text-teal-400 mb-2 group-hover:scale-110 transition-transform" />
                             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                                About Us
+                                Welcome Home
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                                 Learn more about CoC
