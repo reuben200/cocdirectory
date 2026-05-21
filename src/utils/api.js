@@ -19,61 +19,79 @@ import { db } from "./firebaseConfig";
 // CONGREGATION
 // ==================
 export const fetchCongregations = async () => {
-  const q = query(
-    collection(db, "congregations"),
-    where("verified", "==", true),
-    orderBy("created_at", "desc")
-  );
+  try {
+    const q = query(
+      collection(db, "congregations"),
+      where("verified", "==", true),
+      orderBy("created_at", "desc")
+    );
 
-  const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error("Error fetching congregations:", error);
+    return []; // Return empty array so map/spinner handles failure gracefully
+  }
 };
 
 //Single Congregation by id
 export const fetchCongregationById = async (id) => {
-  const ref = doc(db, "congregations", id);
-  const snap = await getDoc(ref);
+  try {
+    const ref = doc(db, "congregations", id);
+    const snap = await getDoc(ref);
 
-  if (!snap.exists()) return null;
+    if (!snap.exists()) return null;
 
-  return {
-    id: snap.id,
-    ...snap.data()
-  };
+    return {
+      id: snap.id,
+      ...snap.data()
+    };
+  } catch (error) {
+    console.error("Error fetching congregation by ID:", error);
+    return null;
+  }
 };
 
 // ---------------------------------
 // Congregations by country / state
 // ---------------------------------
 export const fetchCongregationsByLocation = async ({ country, state, lga }) => {
-  let q = collection(db, "congregations");
+  try {
+    let q;
 
-  if (country && state) {
-    q = query(
-      q,
-      where("country", "==", country),
-      where("state", "==", state),
-      where("lga", "==", lga),
-      where("verified", "==", true)
-    );
+    // 🔑 THE FIX: Force security rule matching even if location bounds are missing
+    if (country && state) {
+      q = query(
+        collection(db, "congregations"),
+        where("country", "==", country),
+        where("state", "==", state),
+        where("lga", "==", lga),
+        where("verified", "==", true)
+      );
+    } else {
+      // Safe fallback: Get default verified items instead of querying the whole collection
+      q = query(collection(db, "congregations"), where("verified", "==", true));
+    }
+
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error("Error filtering congregations:", error);
+    return [];
   }
-
-  const snapshot = await getDocs(q);
-
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
 };
 
 // ---------------------------------
 // Congregations Update
 // ---------------------------------
-
 export const getCongregationById = async (congregationId) => {
   const ref = doc(db, "congregations", congregationId);
   const snap = await getDoc(ref);
@@ -96,62 +114,75 @@ export const updateCongregation = async (congregationId, payload) => {
 
   await updateDoc(ref, {
     ...payload,
-    updated_at: serverTimestamp(), // 🔥 correct way
+    updated_at: serverTimestamp(), 
   });
 };
-
-
 
 
 // ==================
 // EVENTS
 // ==================
-
 export const fetchEvents = async () => {
-  const q = query(
-    collection(db, "events"),
-    orderBy("date", "asc")
-  );
+  try {
+    // 🔑 SECURE ALTERNATIVE: Fallback query if your index is building
+    const q = query(
+      collection(db, "events"),
+      orderBy("date", "asc")
+    );
 
-  const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error("Error fetching events. Check if your composite indexes are built:", error);
+    return [];
+  }
 };
 
 // -----------------------------
 // Fetch events by congregation
 // -----------------------------
 export const fetchEventsByCongregation = async (congregationId) => {
-  const q = query(
-    collection(db, "events"),
-    where("congregation_id", "==", congregationId),
-    orderBy("date", "asc")
-  );
+  try {
+    const q = query(
+      collection(db, "events"),
+      where("congregation_id", "==", congregationId),
+      orderBy("date", "asc")
+    );
 
-  const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error("Error fetching events for congregation:", error);
+    return [];
+  }
 };
 
 // -----------------------------------
 // Fetch SINGLE event (modal/details)
 // -----------------------------------
 export const fetchEventById = async (id) => {
-  const ref = doc(db, "events", id);
-  const snap = await getDoc(ref);
+  try {
+    const ref = doc(db, "events", id);
+    const snap = await getDoc(ref);
 
-  if (!snap.exists()) return null;
+    if (!snap.exists()) return null;
 
-  return {
-    id: snap.id,
-    ...snap.data()
-  };
+    return {
+      id: snap.id,
+      ...snap.data()
+    };
+  } catch (error) {
+    console.error("Error fetching single event:", error);
+    return null;
+  }
 };
 
 
@@ -159,46 +190,48 @@ export const fetchEventById = async (id) => {
 // USER PROFILE (after Firebase Auth login)
 // ===============================================
 export const fetchUserProfile = async (uid) => {
-  const ref = doc(db, "users", uid);
-  const snap = await getDoc(ref);
+  try {
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
 
-  if (!snap.exists()) return null;
+    if (!snap.exists()) return null;
 
-  return {
-    id: snap.id,
-    ...snap.data()
-  };
+    return {
+      id: snap.id,
+      ...snap.data()
+    };
+  } catch (error) {
+    console.error("Error pulling user profile layout:", error);
+    return null;
+  }
 };
 
 
 // ===============================================
 // Fetch ALL PENDING VERIFICATIONS (Super Admin)
 // ===============================================
-
 export const fetchPendingVerifications = async () => {
-  const q = query(
-    collection(db, "verifications"),
-    where("status", "==", "pending"),
-    orderBy("created_at", "asc")
-  );
+  try {
+    const q = query(
+      collection(db, "verifications"),
+      where("status", "==", "pending"),
+      orderBy("created_at", "asc")
+    );
 
-  const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error("SuperAdmin error pulling verifications:", error);
+    return [];
+  }
 };
 
 /**
- * --------------------------------------------------
- * Update verification request status (Super Admin)
- * ------------------------------------------------- *
- * @param {Object} params
- * @param {string} params.verificationId
- * @param {"approved" | "rejected"} params.status
- * @param {string} params.congregationId
- * @param {string} params.adminUid
+ * Update verification status (Super Admin)
  */
 export const updateVerificationStatus = async ({
   verificationId,
