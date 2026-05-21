@@ -27,24 +27,18 @@ export default defineConfig({
     id: '/',
     icons: [
       {
-        src: '/icons/pwa-192x192.png',
+        src: 'icons/pwa-192x192.png',
         sizes: '192x192',
         type: 'image/png',
       },
       {
-        src: '/icons/pwa-512x512.png',
+        src: 'icons/pwa-512x512.png',
         sizes: '512x512',
         type: 'image/png',
       },
       {
-        src: '/icons/pwa-512x512-maskable.png',
+        src: 'icons/pwa-512x512-maskable.png',
         sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any maskable'
-      },
-      {
-        src: '/icons/pwa-512x512-maskable.png',
-        sizes: '192x192',
         type: 'image/png',
         purpose: 'any maskable'
       }
@@ -57,6 +51,7 @@ export default defineConfig({
 
     workbox: {
       globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+      globIgnores: ['icons/*.png'],
       cleanupOutdatedCaches: true,
       clientsClaim: true,
     },
