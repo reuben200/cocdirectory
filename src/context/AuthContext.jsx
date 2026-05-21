@@ -26,10 +26,6 @@ useEffect(() => {
       setPlatformSettings(settingsSnap.data());
     }
 
-    await updateDoc(doc(db, "users", authUser.uid), {
-        last_login: serverTimestamp()
-      });
-
     if (!authUser) {
       setUser(null);
       setProfile(null);
@@ -41,6 +37,10 @@ useEffect(() => {
     setUser(authUser);
 
     try {
+      await updateDoc(doc(db, "users", authUser.uid), {
+        last_login: serverTimestamp()
+      });
+
       const userSnap = await getDoc(doc(db, "users", authUser.uid));
       const userData = userSnap.exists() ? userSnap.data() : {};
 
