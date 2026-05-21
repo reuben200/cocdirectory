@@ -171,7 +171,7 @@ const Register = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
             <img
-              src="images/coc-logo.webp"
+              src="/images/coc-logo.webp"
               alt="Church of Christ Logo"
               className="w-16 h-16 rounded-full object-cover"
             />
