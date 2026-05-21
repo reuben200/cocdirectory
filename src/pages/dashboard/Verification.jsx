@@ -21,6 +21,7 @@ const Verification = () => {
   }, [loading, profile, navigate]);
 
   const handleRefresh = async () => {
+    if (!user?.uid) return;
     setChecking(true);
     try {
       // reload user profile from firestore
