@@ -34,7 +34,7 @@ const Login = () => {
           <img
             src="/images/coc-logo.webp"
             alt="Church of Christ Logo"
-            className="w-16 h-16 rounded-full object-cover"
+            className="w-20 h-20 rounded-full object-cover"
           />
           <h2 className="text-2xl font-bold text-gray-800 mt-4">Sign In</h2>
           <p className="text-gray-500 text-sm">Church of Christ Directory</p>
